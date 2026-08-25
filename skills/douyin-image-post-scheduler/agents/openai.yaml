@@ -1,0 +1,6 @@
+interface:
+  display_name: "抖音图文批量排期"
+  short_description: "批量上传抖音图文、激活话题、选择音乐并核验定时队列"
+  default_prompt: "使用 $douyin-image-post-scheduler 检查这个本地素材文件夹，并在我已登录的 Chrome 中批量排期抖音图文。"
+policy:
+  allow_implicit_invocation: true

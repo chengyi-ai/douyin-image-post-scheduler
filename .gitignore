@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+*.log
+*.mov
+*.mp4
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.webp
+douyin-queue*.json
+douyin-schedule*.md
