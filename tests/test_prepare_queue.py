@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import argparse
+import importlib.util
 import json
 import subprocess
 import sys
@@ -12,6 +14,35 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = REPO_ROOT / "skills" / "douyin-image-post-scheduler" / "scripts" / "prepare_queue.py"
+
+
+def load_prepare_queue_module():
+    spec = importlib.util.spec_from_file_location("prepare_queue", SCRIPT)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+PREPARE_QUEUE = load_prepare_queue_module()
+
+
+class ParseHhmmTests(unittest.TestCase):
+    def test_midnight_and_last_minute_boundaries(self) -> None:
+        self.assertEqual(PREPARE_QUEUE.parse_hhmm("00:00"), 0)
+        self.assertEqual(PREPARE_QUEUE.parse_hhmm("23:59"), 23 * 60 + 59)
+
+    def test_rejects_empty_and_unicode_non_ascii_clock_values(self) -> None:
+        for value in ("", "０９:００"):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(
+                    argparse.ArgumentTypeError, "时间必须使用 HH:MM 格式"
+                ):
+                    PREPARE_QUEUE.parse_hhmm(value)
+
+    def test_none_is_not_a_valid_clock_value(self) -> None:
+        with self.assertRaises(TypeError):
+            PREPARE_QUEUE.parse_hhmm(None)
 
 
 class PrepareQueueTests(unittest.TestCase):
