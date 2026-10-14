@@ -1,0 +1,53 @@
+name: 问题反馈 / Bug report
+description: 队列生成报错或结果不对、浏览器发布流程卡住、安装失败
+labels: ["needs-triage", "source:github", "type:bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提交后 Agent 会自动评估可行性并回复。请尽量提供可复现的信息。
+        **不要粘贴 Cookie、token、账号密码、手机号或未公开的素材原文**；截图请先给账号昵称、头像和私信等信息打码。
+  - type: dropdown
+    id: area
+    attributes:
+      label: 出问题的环节
+      options:
+        - 生成队列（prepare_queue.py）
+        - 浏览器发布流程（上传、话题、音乐、定时、核验）
+        - 安装或调用 Skill
+        - 文档
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: 发生了什么
+      description: 实际看到的现象（报错原文、排期时间不对、正文截断位置不对、话题没变成有效话题、页面元素找不到……）。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 完整命令和参数、素材目录结构（可用示例文件名代替真实内容），或卡在 `references/browser-workflow.md` 的哪一步。
+      placeholder: |
+        python3 skills/douyin-image-post-scheduler/scripts/prepare_queue.py ./content --start-date 2026-09-01 --posts-per-day 3 --seed 12345
+        001_示例/01_图片内容/01_标题.jpg …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 版本
+      description: Skill 目录里 `VERSION` 的内容，或仓库 `git rev-parse --short HEAD` 的输出
+  - type: input
+    id: env
+    attributes:
+      label: 运行环境
+      description: 系统、Python 版本、Chrome 版本、所用 Agent（Codex / Claude Code / 直接运行脚本）

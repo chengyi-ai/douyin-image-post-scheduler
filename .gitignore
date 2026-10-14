@@ -14,3 +14,6 @@ __pycache__/
 *.webp
 douyin-queue*.json
 douyin-schedule*.md
+.agent-in/
+.agent-out/
+venv/
