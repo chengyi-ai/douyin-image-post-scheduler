@@ -3,6 +3,8 @@ name: CI
 on:
   push:
   pull_request:
+  # Agent 用默认 token 建的 PR 不会触发 pull_request，由 Agent Implement 手动补触发。
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,6 +13,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.10", "3.13"]
     steps:
@@ -18,5 +21,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - run: python tools/validate_repo.py
       - run: python -m unittest discover -s tests -v
       - run: python skills/douyin-image-post-scheduler/scripts/prepare_queue.py --help

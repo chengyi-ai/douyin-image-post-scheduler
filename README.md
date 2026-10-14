@@ -28,6 +28,8 @@ skills/douyin-image-post-scheduler/
 
 仓库不包含抖音账号、Cookie、原始素材、已发布内容、排期结果或录屏。
 
+维护用的文件不属于 Skill：`CLAUDE.md`（给 Agent 的项目约定）、`tools/`（仓库检查、登记反馈）、`tests/`、`docs/`、`.github/`（CI 与反馈处理工作流）。
+
 ## 安装
 
 ### Codex Skill Installer
@@ -102,11 +104,18 @@ Skill 的默认发布流程是：
 ## 验证
 
 ```bash
+python3 tools/validate_repo.py
 python3 -m unittest discover -s tests -v
 python3 skills/douyin-image-post-scheduler/scripts/prepare_queue.py --help
 ```
 
-测试覆盖队列生成、固定随机种子、图片/标签/标题约束、每天条数和最小时间间隔。
+测试覆盖队列生成、固定随机种子、图片/标签/标题约束、每天条数和最小时间间隔。`tools/validate_repo.py` 检查 Skill 元数据、文档里的路径、红线声明，以及仓库里没有账号凭据、素材和排期结果。
+
+## 反馈
+
+遇到报错、排期不对或发布流程卡住，直接[提 issue](https://github.com/chengyi-ai/douyin-image-post-scheduler/issues/new/choose)。请不要贴 Cookie、账号密码或未打码的后台截图。
+
+提交后 Agent 会自动读代码评估可行性，在 issue 下回复结论和实现思路；维护者确认后由 Agent 写代码、跑测试、提 PR，合并前一定有人审。涉及绕过验证码、无人确认直接发布这类需求不会被采纳。社媒、群聊里的反馈也能登记进来，整套流程和配置见 [docs/agent-workflow.md](docs/agent-workflow.md)。
 
 ## License
 

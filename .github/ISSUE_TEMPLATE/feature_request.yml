@@ -1,0 +1,27 @@
+name: 功能建议 / Feature request
+description: 新的排期方式、素材检查项、核验步骤或体验改进
+labels: ["needs-triage", "source:github", "type:feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提交后 Agent 会自动评估可行性。注意本项目的红线：实际发布前必须用户确认；不保存账号密码、不读取 Cookie；不绕过验证码、登录验证或平台风控；不改写原文；脚本只生成计划文件、不发布。
+        绕过这些红线的需求（自动过验证码、无人确认直接发布、多账号刷量等）不会被采纳。
+  - type: textarea
+    id: problem
+    attributes:
+      label: 想解决什么问题
+      description: 你在排期或发布哪一步遇到了什么不便。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 期望的做法
+      description: 理想中的命令参数、输出格式或发布流程。
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 目前的替代办法
